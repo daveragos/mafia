@@ -26,12 +26,12 @@ class _HomePageState extends State<HomePage> {
 
   List<String> generateRoles(int numPlayers) {
     List<String> roles = [];
-    for (int i = 0; i < numPlayers; i++) {
-      if (Random().nextInt(100) <= 23) {
-        roles.add(Role.Mafia.toString());
-      } else {
-        roles.add(Role.Civilian.toString());
-      }
+    int mafia = numPlayers ~/ 3;
+    for (int i = 0; i < mafia; i++) {
+      roles.add(Role.Mafia.toString());
+    }
+    for (int i = 0; i < numPlayers - mafia; i++) {
+      roles.add(Role.Civilian.toString());
     }
     roles.shuffle();
     return roles;
@@ -43,42 +43,45 @@ class _HomePageState extends State<HomePage> {
       appBar: AppBar(
         title: const Text('Mafia Role Generator'),
       ),
-      body: Padding(
-        padding: const EdgeInsets.all(10.0),
-        child: Column(
-          children: [
-            TextField(
-              controller: _numPlayersController,
-              decoration: const InputDecoration(labelText: "Number of Players"),
-              keyboardType: TextInputType.number,
-            ),
-            ElevatedButton(
-              onPressed: () {
-                if (_numPlayersController.text.isNotEmpty) {
-                  if (int.parse(_numPlayersController.text) < 6) {
-                    ScaffoldMessenger.of(context).showSnackBar(
-                        const SnackBar(content: Text("Minimum 6 players")));
-                  } else {
-                    _generateRoles();
+      body: SingleChildScrollView(
+        child: Padding(
+          padding: const EdgeInsets.all(10.0),
+          child: Column(
+            children: [
+              TextField(
+                controller: _numPlayersController,
+                decoration:
+                    const InputDecoration(labelText: "Number of Players"),
+                keyboardType: TextInputType.number,
+              ),
+              ElevatedButton(
+                onPressed: () {
+                  if (_numPlayersController.text.isNotEmpty) {
+                    if (int.parse(_numPlayersController.text) < 6) {
+                      ScaffoldMessenger.of(context).showSnackBar(
+                          const SnackBar(content: Text("Minimum 6 players")));
+                    } else {
+                      _generateRoles();
+                    }
                   }
-                }
-              },
-              child: const Text("Generate Roles"),
-            ),
-            if (roles != null)
-              Visibility(
-                  // visible: false, // Hide the list from all players
-                  child: ListView.builder(
-                      shrinkWrap: true,
-                      itemCount: roles!.length,
-                      itemBuilder: (context, index) => ListTile(
-                            tileColor: roles![index] == Role.Mafia.toString()
-                                ? Colors.red[100]
-                                : Colors.green[100],
-                            leading: const Icon(Icons.person),
-                            title: Text("Player ${index + 1}"),
-                          ))),
-          ],
+                },
+                child: const Text("Generate Roles"),
+              ),
+              if (roles != null)
+                Visibility(
+                    // visible: false, // Hide the list from all players
+                    child: ListView.builder(
+                        shrinkWrap: true,
+                        itemCount: roles!.length,
+                        itemBuilder: (context, index) => ListTile(
+                              tileColor: roles![index] == Role.Mafia.toString()
+                                  ? Colors.red[100]
+                                  : Colors.green[100],
+                              leading: const Icon(Icons.person),
+                              title: Text("Player ${index + 1}"),
+                            ))),
+            ],
+          ),
         ),
       ),
     );
