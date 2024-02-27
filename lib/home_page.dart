@@ -1,6 +1,7 @@
 import 'dart:math';
 
 import 'package:flutter/material.dart';
+import 'package:mafia/emoji_page.dart';
 
 enum Role {
   Mafia,
@@ -43,9 +44,8 @@ class _HomePageState extends State<HomePage> {
       appBar: AppBar(
         title: const Text('Mafia Role Generator'),
       ),
-      body: SingleChildScrollView(
-        child: Padding(
-          padding: const EdgeInsets.all(10.0),
+      body: SafeArea(
+        child: Center(
           child: Column(
             children: [
               TextField(
@@ -62,24 +62,28 @@ class _HomePageState extends State<HomePage> {
                           const SnackBar(content: Text("Minimum 6 players")));
                     } else {
                       _generateRoles();
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => EmojiPage(roles: roles)));
                     }
                   }
                 },
                 child: const Text("Generate Roles"),
               ),
-              if (roles != null)
-                Visibility(
-                    // visible: false, // Hide the list from all players
-                    child: ListView.builder(
-                        shrinkWrap: true,
-                        itemCount: roles!.length,
-                        itemBuilder: (context, index) => ListTile(
-                              tileColor: roles![index] == Role.Mafia.toString()
-                                  ? Colors.red[100]
-                                  : Colors.green[100],
-                              leading: const Icon(Icons.person),
-                              title: Text("Player ${index + 1}"),
-                            ))),
+              // if (roles != null)
+              //   Visibility(
+              //       // visible: false, // Hide the list from all players
+              //       child: ListView.builder(
+              //           shrinkWrap: true,
+              //           itemCount: roles!.length,
+              //           itemBuilder: (context, index) => ListTile(
+              //                 tileColor: roles![index] == Role.Mafia.toString()
+              //                     ? Colors.red[100]
+              //                     : Colors.green[100],
+              //                 leading: const Icon(Icons.person),
+              //                 title: Text("Player ${index + 1}"),
+              //               ))),
             ],
           ),
         ),
