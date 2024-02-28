@@ -2,6 +2,7 @@ import 'dart:math';
 
 import 'package:flutter/material.dart';
 import 'package:mafia/emoji_page.dart';
+import 'package:mafia/how_to_play_guide.dart';
 
 enum Role {
   Mafia,
@@ -44,6 +45,17 @@ class _HomePageState extends State<HomePage> {
       child: Scaffold(
         appBar: AppBar(
           title: const Text('Mafia 🎭 Game'),
+          actions: [
+            IconButton(
+              onPressed: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => HowToPlayGuidePage()),
+                );
+              },
+              icon: const Icon(Icons.help),
+            ),
+          ],
         ),
         body: SingleChildScrollView(
           child: Padding(
