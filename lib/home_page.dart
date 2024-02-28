@@ -43,7 +43,7 @@ class _HomePageState extends State<HomePage> {
     return SafeArea(
       child: Scaffold(
         appBar: AppBar(
-          title: const Text('Mafia Game'),
+          title: const Text('Mafia 🎭 Game'),
         ),
         body: SingleChildScrollView(
           child: Padding(
@@ -68,9 +68,9 @@ class _HomePageState extends State<HomePage> {
                           ScaffoldMessenger.of(context).showSnackBar(
                             const SnackBar(content: Text("Invalid input")),
                           );
-                        } else if (int.parse(_numPlayersController.text) < 6) {
+                        } else if (int.parse(_numPlayersController.text) < 3) {
                           ScaffoldMessenger.of(context).showSnackBar(
-                            const SnackBar(content: Text("Minimum 6 players")),
+                            const SnackBar(content: Text("Minimum 3 players")),
                           );
                         } else {
                           _generateRoles();
@@ -82,6 +82,7 @@ class _HomePageState extends State<HomePage> {
                           );
                         }
                       }
+                      _numPlayersController.clear();
                     },
                     child: const Text("Generate Roles"),
                   ),

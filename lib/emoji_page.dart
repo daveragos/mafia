@@ -17,7 +17,7 @@ class _EmojiPageState extends State<EmojiPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Emoji Page'),
+        title: const Text('Emoji 🙂 Page'),
       ),
       body: SafeArea(
           child: Center(
