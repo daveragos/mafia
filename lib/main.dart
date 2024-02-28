@@ -1,6 +1,4 @@
 import 'package:flutter/material.dart';
-import 'dart:math';
-
 import 'package:mafia/home_page.dart';
 
 void main() {

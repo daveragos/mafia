@@ -40,51 +40,54 @@ class _HomePageState extends State<HomePage> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: const Text('Mafia Role Generator'),
-      ),
-      body: SafeArea(
-        child: Center(
-          child: Column(
-            children: [
-              TextField(
-                controller: _numPlayersController,
-                decoration:
-                    const InputDecoration(labelText: "Number of Players"),
-                keyboardType: TextInputType.number,
+    return SafeArea(
+      child: Scaffold(
+        appBar: AppBar(
+          title: const Text('Mafia Game'),
+        ),
+        body: SingleChildScrollView(
+          child: Padding(
+            padding: const EdgeInsets.all(38.0),
+            child: Center(
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  TextField(
+                    controller: _numPlayersController,
+                    decoration: const InputDecoration(
+                      labelText: "Number of Players",
+                    ),
+                    keyboardType: TextInputType.number,
+                  ),
+                  const SizedBox(height: 20),
+                  ElevatedButton(
+                    onPressed: () {
+                      if (_numPlayersController.text.isNotEmpty) {
+                        //first check if the input is number
+                        if (int.tryParse(_numPlayersController.text) == null) {
+                          ScaffoldMessenger.of(context).showSnackBar(
+                            const SnackBar(content: Text("Invalid input")),
+                          );
+                        } else if (int.parse(_numPlayersController.text) < 6) {
+                          ScaffoldMessenger.of(context).showSnackBar(
+                            const SnackBar(content: Text("Minimum 6 players")),
+                          );
+                        } else {
+                          _generateRoles();
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => EmojiPage(roles: roles),
+                            ),
+                          );
+                        }
+                      }
+                    },
+                    child: const Text("Generate Roles"),
+                  ),
+                ],
               ),
-              ElevatedButton(
-                onPressed: () {
-                  if (_numPlayersController.text.isNotEmpty) {
-                    if (int.parse(_numPlayersController.text) < 6) {
-                      ScaffoldMessenger.of(context).showSnackBar(
-                          const SnackBar(content: Text("Minimum 6 players")));
-                    } else {
-                      _generateRoles();
-                      Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                              builder: (context) => EmojiPage(roles: roles)));
-                    }
-                  }
-                },
-                child: const Text("Generate Roles"),
-              ),
-              // if (roles != null)
-              //   Visibility(
-              //       // visible: false, // Hide the list from all players
-              //       child: ListView.builder(
-              //           shrinkWrap: true,
-              //           itemCount: roles!.length,
-              //           itemBuilder: (context, index) => ListTile(
-              //                 tileColor: roles![index] == Role.Mafia.toString()
-              //                     ? Colors.red[100]
-              //                     : Colors.green[100],
-              //                 leading: const Icon(Icons.person),
-              //                 title: Text("Player ${index + 1}"),
-              //               ))),
-            ],
+            ),
           ),
         ),
       ),
