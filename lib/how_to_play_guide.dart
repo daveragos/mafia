@@ -6,10 +6,10 @@ class HowToPlayGuidePage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('How to Play Guide'),
+        title: const Text('How to Play Guide'),
       ),
-      body: Padding(
-        padding: const EdgeInsets.all(8.0),
+      body: const Padding(
+        padding: EdgeInsets.all(8.0),
         child: Markdown(
           data: '''
 # 🎭 How to Play Mafia Game
