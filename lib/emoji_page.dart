@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:math';
 import 'package:flutter/material.dart';
 
 class EmojiPage extends StatefulWidget {
@@ -26,7 +27,7 @@ class _EmojiPageState extends State<EmojiPage> {
                   : Column(
                       children: [
                         Text(
-                            "Showing role ${_index + 1} of ${widget.roles!.length}"),
+                            "Showing role ${min(_index + 1, widget.roles!.length)} of ${widget.roles!.length}"),
                         Tooltip(
                           message: 'Press and hold to change',
                           decoration: BoxDecoration(
