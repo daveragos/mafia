@@ -27,23 +27,40 @@ class _EmojiPageState extends State<EmojiPage> {
                       children: [
                         Text(
                             "Showing role ${_index + 1} of ${widget.roles!.length}"),
-                        GestureDetector(
-                            onLongPress: () {
-                              setState(() {
-                                _index++;
-                                _showRealEmoji = true;
-                                Timer(const Duration(seconds: 2), () {
-                                  setState(() {
-                                    _showRealEmoji = false;
+                        Tooltip(
+                          message: 'Press and hold to change',
+                          decoration: BoxDecoration(
+                            color: Colors.blueAccent,
+                            borderRadius: BorderRadius.circular(10.0),
+                          ),
+                          height: 32.0,
+                          padding: const EdgeInsets.all(8.0),
+                          margin: const EdgeInsets.all(10.0),
+                          verticalOffset: 110.0,
+                          preferBelow: false,
+                          textStyle: const TextStyle(
+                            color: Colors.white,
+                            fontWeight: FontWeight.bold,
+                            fontSize: 14.0,
+                          ),
+                          child: GestureDetector(
+                              onLongPress: () {
+                                setState(() {
+                                  _index++;
+                                  _showRealEmoji = true;
+                                  Timer(const Duration(seconds: 2), () {
+                                    setState(() {
+                                      _showRealEmoji = false;
+                                    });
                                   });
                                 });
-                              });
-                            },
-                            child: _index < widget.roles!.length
-                                ? EmojiCard(
-                                    role: widget.roles![_index],
-                                    showRealEmoji: _showRealEmoji)
-                                : const Text("All roles are shown")),
+                              },
+                              child: _index < widget.roles!.length
+                                  ? EmojiCard(
+                                      role: widget.roles![_index],
+                                      showRealEmoji: _showRealEmoji)
+                                  : const Text("All roles are shown")),
+                        ),
                       ],
                     ))),
     );
